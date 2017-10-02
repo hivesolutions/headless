@@ -1,0 +1,17 @@
+{
+    "name": "headless",
+    "version": "1.0.0",
+    "description": "Simple Web App for headless functions",
+    "main": "app.js",
+    "scripts": {},
+    "keywords": [
+        "headless",
+        "pdf"
+    ],
+    "author": "Hive Solutions",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.16.1",
+        "phantom": "^4.0.5"
+    }
+}
