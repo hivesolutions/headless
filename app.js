@@ -12,7 +12,16 @@ var app = express();
 const hostname = process.env.HOST ? process.env.HOST : "127.0.0.1";
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
-// registers for the base router  
+var instance = null;
+
+phantom.create().then(function (ph) {
+    instance = ph;
+});
+
+process.on("exit", function () {
+    instance.exit();
+});
+
 app.get("/", function (req, res) {
     var url = req.query.url || "https://www.google.com/";
     var format = req.query.format || "PNG";
@@ -21,23 +30,20 @@ app.get("/", function (req, res) {
     var pageFormat = req.query.page_format || "A2";
     viewportWidth = parseInt(viewportWidth);
     viewportHeight = parseInt(viewportHeight);
-    phantom.create().then(function (ph) {
-        ph.createPage().then(function (page) {
-            page.viewportSize = {
-                width: viewportWidth,
-                height: viewportHeight
-            };
-            page.paperSize = {
-                format: pageFormat
-            };
-            page.open(url).then(function (status) {
-                page.renderBase64(format).then(function (contentBase64) {
-                    var content = Buffer.from(contentBase64, "base64");
-                    res.type(format);
-                    res.send(content);
-                    page.close();
-                    ph.exit();
-                });
+    instance.createPage().then(function (page) {
+        page.viewportSize = {
+            width: viewportWidth,
+            height: viewportHeight
+        };
+        page.paperSize = {
+            format: pageFormat
+        };
+        page.open(url).then(function (status) {
+            page.renderBase64(format).then(function (contentBase64) {
+                var content = Buffer.from(contentBase64, "base64");
+                res.type(format);
+                res.send(content);
+                page.close();
             });
         });
     });
@@ -46,3 +52,4 @@ app.get("/", function (req, res) {
 app.listen(port, hostname, function () {
     console.log("Listening on " + hostname + ":" + String(port));
 });
+  
