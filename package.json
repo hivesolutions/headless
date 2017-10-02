@@ -15,6 +15,7 @@
         "phantom": "^4.0.5"
     },
     "devDependencies": {
+        "eslint": "^3.19",
         "eslint-config-standard": "^10.2.1",
         "eslint-plugin-import": "^2.7.0",
         "eslint-plugin-node": "^5.2.0",
