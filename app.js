@@ -19,7 +19,7 @@ phantom.create().then(function (ph) {
 });
 
 process.on("exit", function () {
-    instance.exit();
+    instance && instance.exit();
 });
 
 app.get("/", function (req, res) {
