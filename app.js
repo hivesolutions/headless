@@ -16,14 +16,19 @@ const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 app.get("/", function (req, res) {
     var url = req.query.url || "https://www.google.com/";
     var format = req.query.format || "PNG";
+    var viewportWidth = req.query.viewport_width || 768;
+    var viewportHeight = req.query.viewport_height || 1024;
+    var pageFormat = req.query.page_format || "A2";
+    viewportWidth = parseInt(viewportWidth);
+    viewportHeight = parseInt(viewportHeight);
     phantom.create().then(function (ph) {
         ph.createPage().then(function (page) {
             page.viewportSize = {
-                width: 768,
-                height: 1024
+                width: viewportWidth,
+                height: viewportHeight
             };
             page.paperSize = {
-                format: "A2"
+                format: pageFormat
             };
             page.open(url).then(function (status) {
                 page.renderBase64(format).then(function (contentBase64) {
