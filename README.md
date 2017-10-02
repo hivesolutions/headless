@@ -1,2 +1,3 @@
-# headless
-Simple headless browser API
+# Headless
+
+Simple headless browser API.
