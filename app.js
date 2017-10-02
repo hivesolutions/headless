@@ -27,25 +27,27 @@ process.on("exit", function () {
 app.get("/", function (req, res) {
     var url = req.query.url || "https://www.google.com/";
     var format = req.query.format || "PNG";
-    var viewportWidth = req.query.viewport_width || 768;
-    var viewportHeight = req.query.viewport_height || 1024;
+    var viewportWidth = req.query.viewport_width || 1024;
+    var viewportHeight = req.query.viewport_height || 768;
     var pageFormat = req.query.page_format || "A2";
     viewportWidth = parseInt(viewportWidth);
     viewportHeight = parseInt(viewportHeight);
     instance.createPage().then(function (page) {
-        page.viewportSize = {
-            width: viewportWidth,
-            height: viewportHeight
-        };
-        page.paperSize = {
-            format: pageFormat
-        };
         page.open(url).then(function (status) {
-            page.renderBase64(format).then(function (contentBase64) {
-                var content = Buffer.from(contentBase64, "base64");
-                res.type(format);
-                res.send(content);
-                page.close();
+            page.property("viewportSize", {
+                width: viewportWidth,
+                height: viewportHeight
+            }).then(function () {
+                page.property("paperSize", {
+                    format: pageFormat
+                }).then(function () {
+                    page.renderBase64(format).then(function (contentBase64) {
+                        var content = Buffer.from(contentBase64, "base64");
+                        res.type(format);
+                        res.send(content);
+                        page.close();
+                    });
+                });
             });
         });
     });
