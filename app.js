@@ -9,8 +9,8 @@ var app = express();
 
 // retrieves the complete set of configuration values
 // from the current environemnt
-const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 const hostname = process.env.HOST ? process.env.HOST : "127.0.0.1";
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
 // registers for the base router  
 app.get("/", function (req, res) {
