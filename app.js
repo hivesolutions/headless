@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+
 // requires the multiple libraries
 const express = require("express");
 const phantom = require("phantom");
@@ -8,7 +10,7 @@ const process = require("process");
 var app = express();
 
 // retrieves the complete set of configuration values
-// from the current environemnt
+// from the current environment
 const hostname = process.env.HOST ? process.env.HOST : "127.0.0.1";
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
