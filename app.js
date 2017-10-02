@@ -14,6 +14,7 @@ const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
 // registers for the base router  
 app.get("/", function (req, res) {
+    var url = req.query.url || "https://www.google.com/";
     var format = req.query.format || "PNG";
     phantom.create().then(function (ph) {
         ph.createPage().then(function (page) {
@@ -24,7 +25,7 @@ app.get("/", function (req, res) {
             page.paperSize = {
                 format: "A2"
             };
-            page.open("https://stackoverflow.com/").then(function (status) {
+            page.open(url).then(function (status) {
                 page.renderBase64(format).then(function (contentBase64) {
                     var content = Buffer.from(contentBase64, "base64");
                     res.type(format);
