@@ -11,7 +11,7 @@ ADD app.js /
 ADD package.json /
 
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-RUN apt-get update && apt-get install -y nodejs
+RUN apt-get update && apt-get install -y bzip2 nodejs
 RUN npm install
 
 CMD ["/usr/bin/node", "/app.js"]
