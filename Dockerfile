@@ -1,8 +1,10 @@
 FROM hivesolutions/alpine_dev:latest
 MAINTAINER Hive Solutions
 
-EXPOSE 3000
+EXPOSE 8080
 
+ENV HOST 0.0.0.0
+ENV PORT 8080
 ENV NODE_ENV production
 
 ADD app.js /

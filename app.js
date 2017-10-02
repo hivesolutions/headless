@@ -1,10 +1,16 @@
 // requires the multiple libraries
 const express = require("express");
 const phantom = require("phantom");
+const process = require("process");
 
 // builds the initial application object to be used
 // by the application for serving
 var app = express();
+
+// retrieves the complete set of configuration values
+// from the current environemnt
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+const hostname = process.env.HOST ? process.env.HOST : "127.0.0.1";
 
 // registers for the base router  
 app.get("/", function (req, res) {
@@ -31,6 +37,6 @@ app.get("/", function (req, res) {
     });
 });
 
-app.listen(3000, function () {
-    console.log("Example app listening on port 3000!");
+app.listen(port, hostname, function () {
+    console.log("Listening on " + hostname + ":" + String(port));
 });
