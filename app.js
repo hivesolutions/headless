@@ -25,6 +25,7 @@ phantom.create().then(function (_phantom) {
 });
 
 process.on("exit", function () {
+    console.log("Exiting on user's request");
     instance && instance.exit();
 });
 
