@@ -32,38 +32,41 @@ process.on("exit", function () {
 app.get("/", function (req, res) {
     const url = req.query.url || "https://www.google.com/";
     const format = req.query.format || "PNG";
+    const zoom = parseFloat(req.query.zoom || 1.0);
     const viewportWidth = parseInt(req.query.viewport_width || 1024);
     const viewportHeight = parseInt(req.query.viewport_height || 768);
     const pageFormat = req.query.page_format || "A2";
     verifyKey(req);
     instance.createPage().then(function (page) {
         page.open(url).then(function (status) {
-            page.property("viewportSize", {
-                width: viewportWidth || null,
-                height: viewportHeight || null
-            }).then(function () {
-                page.property("paperSize", {
-                    format: pageFormat || null
+            page.property("zoomFactor", zoom).then(function () {
+                page.property("viewportSize", {
+                    width: viewportWidth || null,
+                    height: viewportHeight || null
                 }).then(function () {
-                    const isBuffer = ["png", "gif", "jpeg", "jpg"].indexOf(format.toLowerCase()) !== -1;
-                    if (isBuffer) {
-                        page.renderBase64(format).then(function (contentBase64) {
-                            var content = Buffer.from(contentBase64, "base64");
-                            res.type(format);
-                            res.send(content);
-                            page.close();
-                        });
-                    } else {
-                        const name = uuidv4() + "." + format;
-                        const tempPath = path.resolve(name);
-                        page.render(tempPath).then(function () {
-                            res.sendFile(tempPath, {}, function () {
-                                fs.unlink(tempPath, function () {
-                                });
+                    page.property("paperSize", {
+                        format: pageFormat || null
+                    }).then(function () {
+                        const isBuffer = ["png", "gif", "jpeg", "jpg"].indexOf(format.toLowerCase()) !== -1;
+                        if (isBuffer) {
+                            page.renderBase64(format).then(function (contentBase64) {
+                                var content = Buffer.from(contentBase64, "base64");
+                                res.type(format);
+                                res.send(content);
+                                page.close();
                             });
-                            page.close();
-                        });
-                    }
+                        } else {
+                            const name = uuidv4() + "." + format;
+                            const tempPath = path.resolve(name);
+                            page.render(tempPath).then(function () {
+                                res.sendFile(tempPath, {}, function () {
+                                    fs.unlink(tempPath, function () {
+                                    });
+                                });
+                                page.close();
+                            });
+                        }
+                    });
                 });
             });
         });
