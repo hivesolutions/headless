@@ -20,8 +20,8 @@ const key = process.env.HEADLESS_KEY ? process.env.HEADLESS_KEY : null;
 
 var instance = null;
 
-phantom.create().then(function (ph) {
-    instance = ph;
+phantom.create().then(function (_phantom) {
+    instance = _phantom;
 });
 
 process.on("exit", function () {
