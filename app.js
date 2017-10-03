@@ -1,9 +1,12 @@
 /* jshint esversion: 6 */
 
 // requires the multiple libraries
+const fs = require("fs");
+const path = require("path");
 const express = require("express");
 const phantom = require("phantom");
 const process = require("process");
+const uuidv4 = require("uuid/v4");
 
 // builds the initial application object to be used
 // by the application for serving
@@ -41,12 +44,25 @@ app.get("/", function (req, res) {
                 page.property("paperSize", {
                     format: pageFormat
                 }).then(function () {
-                    page.renderBase64(format).then(function (contentBase64) {
-                        var content = Buffer.from(contentBase64, "base64");
-                        res.type(format);
-                        res.send(content);
-                        page.close();
-                    });
+                    const isBuffer = ["png", "gif", "jpeg", "jpg"].indexOf(format.toLowerCase()) !== -1;
+                    if (isBuffer) {
+                        page.renderBase64(format).then(function (contentBase64) {
+                            var content = Buffer.from(contentBase64, "base64");
+                            res.type(format);
+                            res.send(content);
+                            page.close();
+                        });
+                    } else {
+                        const name = uuidv4() + "." + format;
+                        const tempPath = path.resolve(name);
+                        page.render(tempPath).then(function () {
+                            res.sendFile(tempPath, {}, function () {
+                                fs.unlink(tempPath, function () {
+                                });
+                            });
+                            page.close();
+                        });
+                    }
                 });
             });
         });
