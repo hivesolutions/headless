@@ -28,13 +28,11 @@ process.on("exit", function () {
 });
 
 app.get("/", function (req, res) {
-    var url = req.query.url || "https://www.google.com/";
-    var format = req.query.format || "PNG";
-    var viewportWidth = req.query.viewport_width || 1024;
-    var viewportHeight = req.query.viewport_height || 768;
-    var pageFormat = req.query.page_format || "A2";
-    viewportWidth = parseInt(viewportWidth);
-    viewportHeight = parseInt(viewportHeight);
+    const url = req.query.url || "https://www.google.com/";
+    const format = req.query.format || "PNG";
+    const viewportWidth = parseInt(req.query.viewport_width || 1024);
+    const viewportHeight = parseInt(req.query.viewport_height || 768);
+    const pageFormat = req.query.page_format || "A2";
     instance.createPage().then(function (page) {
         page.open(url).then(function (status) {
             page.property("viewportSize", {
