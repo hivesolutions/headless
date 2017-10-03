@@ -28,17 +28,6 @@ process.on("exit", function () {
     instance && instance.exit();
 });
 
-const verifyKey = function (req) {
-    if (!key) {
-        return;
-    }
-    const _key = req.query.key || req.headers["X-Headless-Key"] || null;
-    if (key === _key) {
-        return;
-    }
-    throw new Error("Invalid key");
-};
-
 app.get("/", function (req, res) {
     const url = req.query.url || "https://www.google.com/";
     const format = req.query.format || "PNG";
@@ -83,3 +72,14 @@ app.get("/", function (req, res) {
 app.listen(port, hostname, function () {
     console.log("Listening on " + hostname + ":" + String(port));
 });
+
+const verifyKey = function (req) {
+    if (!key) {
+        return;
+    }
+    const _key = req.query.key || req.headers["X-Headless-Key"] || null;
+    if (key === _key) {
+        return;
+    }
+    throw new Error("Invalid key");
+};
