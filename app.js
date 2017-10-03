@@ -16,6 +16,7 @@ var app = express();
 // from the current environment
 const hostname = process.env.HOST ? process.env.HOST : "127.0.0.1";
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+const key = process.env.HEADLESS_KEY ? process.env.HEADLESS_KEY : null;
 
 var instance = null;
 
@@ -27,12 +28,24 @@ process.on("exit", function () {
     instance && instance.exit();
 });
 
+const verifyKey = function (req) {
+    if (!key) {
+        return;
+    }
+    const _key = req.query.key || req.headers["X-Headless-Key"] || null;
+    if (key === _key) {
+        return;
+    }
+    throw new Error("Invalid key");
+};
+
 app.get("/", function (req, res) {
     const url = req.query.url || "https://www.google.com/";
     const format = req.query.format || "PNG";
     const viewportWidth = parseInt(req.query.viewport_width || 1024);
     const viewportHeight = parseInt(req.query.viewport_height || 768);
     const pageFormat = req.query.page_format || "A2";
+    verifyKey(req);
     instance.createPage().then(function (page) {
         page.open(url).then(function (status) {
             page.property("viewportSize", {
