@@ -39,11 +39,11 @@ app.get("/", function (req, res) {
     instance.createPage().then(function (page) {
         page.open(url).then(function (status) {
             page.property("viewportSize", {
-                width: viewportWidth,
-                height: viewportHeight
+                width: viewportWidth || null,
+                height: viewportHeight || null
             }).then(function () {
                 page.property("paperSize", {
-                    format: pageFormat
+                    format: pageFormat || null
                 }).then(function () {
                     const isBuffer = ["png", "gif", "jpeg", "jpg"].indexOf(format.toLowerCase()) !== -1;
                     if (isBuffer) {
