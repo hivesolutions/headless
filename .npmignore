@@ -1,0 +1,7 @@
+*.log
+
+package-lock.json
+Dockerfile
+Dockerfile.rolling
+
+/.vscode
