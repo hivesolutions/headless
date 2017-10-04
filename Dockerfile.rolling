@@ -9,7 +9,7 @@ ENV NODE_ENV production
 
 ADD app.js /headless/
 ADD package.json /headless/
-ADD lib /headless/
+ADD lib /headless/lib
 
 WORKDIR /headless
 
