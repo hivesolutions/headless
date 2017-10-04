@@ -11,6 +11,8 @@ ADD app.js /headless/
 ADD package.json /headless/
 ADD lib /headless/
 
+WORKDIR /headless
+
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get update && apt-get install -y bzip2 fontconfig nodejs
 RUN npm install
