@@ -10,7 +10,7 @@ ENV NODE_ENV production
 ADD app.js /
 ADD package.json /
 
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get update && apt-get install -y bzip2 fontconfig nodejs
 RUN npm install
 
