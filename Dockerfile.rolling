@@ -7,14 +7,14 @@ ENV HOST 0.0.0.0
 ENV PORT 8080
 ENV NODE_ENV production
 
-ADD app.js /headless/
-ADD package.json /headless/
-ADD lib /headless/lib
+ADD app.js /app/
+ADD package.json /app/
+ADD lib /app/lib
 
-WORKDIR /headless
+WORKDIR /app
 
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get update && apt-get install -y bzip2 fontconfig nodejs
 RUN npm install
 
-CMD ["/usr/bin/node", "/headless/app.js"]
+CMD ["/usr/bin/node", "/app/app.js"]
