@@ -1,4 +1,4 @@
-/* jshint esversion: 6 */
+/* jshint esversion: 7 */
 
 // requires the multiple libraries
 const fs = require("fs");
