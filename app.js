@@ -3,8 +3,8 @@
 // requires the multiple libraries
 const express = require("express");
 const process = require("process");
-const base = require("./util/base");
-const config = require("./util/config");
+const base = require("./lib/util/base");
+const config = require("./lib/util/config");
 
 // builds the initial application object to be used
 // by the application for serving
