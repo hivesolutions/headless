@@ -10,7 +10,7 @@ const uuidv4 = require("uuid/v4");
 
 // builds the initial application object to be used
 // by the application for serving
-var app = express();
+const app = express();
 
 // retrieves the complete set of configuration values
 // from the current environment
@@ -18,6 +18,8 @@ const hostname = process.env.HOST ? process.env.HOST : "127.0.0.1";
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 const key = process.env.HEADLESS_KEY ? process.env.HEADLESS_KEY : null;
 
+// creates the global variable that is going to hold the
+// phantom instance to be used by the rest of the application
 var instance = null;
 
 const init = async function () {
@@ -55,7 +57,7 @@ app.get("/", function (req, res, next) {
         const isBuffer = ["png", "gif", "jpeg", "jpg"].indexOf(format.toLowerCase()) !== -1;
         if (isBuffer) {
             const contentBase64 = await page.renderBase64(format);
-            var content = Buffer.from(contentBase64, "base64");
+            const content = Buffer.from(contentBase64, "base64");
             res.type(format);
             res.send(content);
             page.close();
