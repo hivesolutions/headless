@@ -7,12 +7,12 @@ ENV HOST 0.0.0.0
 ENV PORT 8080
 ENV NODE_ENV production
 
-ADD app.js /
-ADD package.json /
-ADD lib /
+ADD app.js /app/
+ADD package.json /app/
+ADD lib /app/
 
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get update && apt-get install -y bzip2 fontconfig nodejs
 RUN npm install
 
-CMD ["/usr/bin/node", "/app.js"]
+CMD ["/usr/bin/node", "/app/app.js"]
