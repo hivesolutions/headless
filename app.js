@@ -20,61 +20,62 @@ const key = process.env.HEADLESS_KEY ? process.env.HEADLESS_KEY : null;
 
 var instance = null;
 
-phantom.create().then(function (_phantom) {
-    instance = _phantom;
-});
+const init = async function () {
+    instance = await phantom.create();
+};
+
+const destroy = async function () {
+    instance && instance.exit();
+};
 
 process.on("exit", function () {
     console.log("Exiting on user's request");
-    instance && instance.exit();
+    destroy();
 });
 
-app.get("/", function (req, res) {
-    const url = req.query.url || "https://www.google.com/";
-    const format = req.query.format || "PNG";
-    const zoom = parseFloat(req.query.zoom || 1.0);
-    const viewportWidth = parseInt(req.query.viewport_width || 1024);
-    const viewportHeight = parseInt(req.query.viewport_height || 768);
-    const pageFormat = req.query.page_format || "A2";
-    verifyKey(req);
-    instance.createPage().then(function (page) {
-        page.open(url).then(function (status) {
-            page.property("zoomFactor", zoom).then(function () {
-                page.property("viewportSize", {
-                    width: viewportWidth || null,
-                    height: viewportHeight || null
-                }).then(function () {
-                    page.property("paperSize", {
-                        format: pageFormat || null
-                    }).then(function () {
-                        const isBuffer = ["png", "gif", "jpeg", "jpg"].indexOf(format.toLowerCase()) !== -1;
-                        if (isBuffer) {
-                            page.renderBase64(format).then(function (contentBase64) {
-                                var content = Buffer.from(contentBase64, "base64");
-                                res.type(format);
-                                res.send(content);
-                                page.close();
-                            });
-                        } else {
-                            const name = uuidv4() + "." + format;
-                            const tempPath = path.resolve(name);
-                            page.render(tempPath).then(function () {
-                                res.sendFile(tempPath, {}, function () {
-                                    fs.unlink(tempPath, function () {
-                                    });
-                                });
-                                page.close();
-                            });
-                        }
-                    });
-                });
-            });
+app.get("/", function (req, res, next) {
+    const clojure = async function (next) {
+        const url = req.query.url || "https://www.google.com/";
+        const format = req.query.format || "PNG";
+        const zoom = parseFloat(req.query.zoom || 1.0);
+        const viewportWidth = parseInt(req.query.viewport_width || 1024);
+        const viewportHeight = parseInt(req.query.viewport_height || 768);
+        const pageFormat = req.query.page_format || "A2";
+        verifyKey(req);
+        const page = await instance.createPage();
+        await page.open(url);
+        await page.property("zoomFactor", zoom);
+        await page.property("viewportSize", {
+            width: viewportWidth || null,
+            height: viewportHeight || null
         });
-    });
+        await page.property("paperSize", {
+            format: pageFormat || null
+        });
+        const isBuffer = ["png", "gif", "jpeg", "jpg"].indexOf(format.toLowerCase()) !== -1;
+        if (isBuffer) {
+            const contentBase64 = await page.renderBase64(format);
+            var content = Buffer.from(contentBase64, "base64");
+            res.type(format);
+            res.send(content);
+            page.close();
+        } else {
+            const name = uuidv4() + "." + format;
+            const tempPath = path.resolve(name);
+            await page.render(tempPath);
+            res.sendFile(tempPath, {}, function () {
+                fs.unlink(tempPath, function () {});
+            });
+            page.close();
+        }
+    };
+
+    clojure().catch(next);
 });
 
 app.listen(port, hostname, function () {
     console.log("Listening on " + hostname + ":" + String(port));
+    init();
 });
 
 const verifyKey = function (req) {
