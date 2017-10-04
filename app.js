@@ -4,6 +4,7 @@
 const express = require("express");
 const process = require("process");
 const phantom = require("./engines/phantom");
+const puppeteer = require("./engines/puppeteer");
 
 // builds the initial application object to be used
 // by the application for serving
@@ -15,10 +16,17 @@ const hostname = process.env.HOST ? process.env.HOST : "127.0.0.1";
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 const key = process.env.HEADLESS_KEY ? process.env.HEADLESS_KEY : null;
 
+const ENGINES = {
+    phantom: phantom,
+    puppeteer: puppeteer
+};
+
 app.get("/", function(req, res, next) {
     async function clojure() {
         verifyKey(req);
-        phantom.render(req, res, next);
+        const engine = req.query.engine || "puppeteer";
+        var engineModule = ENGINES[engine];
+        await engineModule.render(req, res, next);
     }
     clojure().catch(next);
 });
@@ -26,11 +34,13 @@ app.get("/", function(req, res, next) {
 app.listen(port, hostname, function() {
     console.log("Listening on " + hostname + ":" + String(port));
     phantom.init();
+    puppeteer.init();
 });
 
 process.on("exit", function() {
     console.log("Exiting on user's request");
     phantom.destroy();
+    puppeteer.destroy();
 });
 
 function verifyKey(req) {

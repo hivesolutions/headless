@@ -1,6 +1,9 @@
 /* jshint esversion: 7 */
 
+const fs = require("fs");
+const path = require("path");
 const puppeteer = require("puppeteer");
+const uuidv4 = require("uuid/v4");
 
 var instance = null;
 
@@ -13,9 +16,30 @@ async function destroy() {
 }
 
 async function render(req, res, next) {
+    const url = req.query.url || "https://www.google.com/";
+    const format = req.query.format || "PNG";
+    const pageFormat = req.query.page_format || "A4";
+    const name = uuidv4() + "." + format;
+    const tempPath = path.resolve(name);
+    const isPdf = ["pdf"].indexOf(format.toLowerCase()) !== -1;
     const page = await instance.newPage();
-    await page.goto("https://www.google.com");
-    await page.screenshot({path: "example.png"});
+    await page.goto(url, {
+        waitUntil: "networkidle",
+        networkIdleTimeout: 500
+    });
+    if (isPdf) {
+        await page.pdf({
+            path: tempPath,
+            format: pageFormat
+        });
+    } else {
+        await page.screenshot({
+            path: tempPath
+        });
+    }
+    res.sendFile(tempPath, {}, function() {
+        fs.unlink(tempPath, function() {});
+    });
 }
 
 module.exports = {
