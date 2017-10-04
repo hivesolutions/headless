@@ -1,8 +1,9 @@
 module.exports = {
     "extends": "standard",
-    "rules" : {
+    "rules": {
         "indent": ["warn", 4],
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
+        "space-before-function-paren": ["error", "never"]
     }
 };
