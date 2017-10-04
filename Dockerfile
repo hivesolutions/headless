@@ -14,7 +14,7 @@ ADD lib /app/lib
 WORKDIR /app
 
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-RUN apt-get update && apt-get install -y bzip2 fontconfig nodejs
+RUN apt-get update && apt-get install -y bzip2 fontconfig libpangocairo-1.0.0 nodejs
 RUN npm install
 
 CMD ["/usr/bin/node", "/app/app.js"]
