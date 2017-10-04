@@ -28,15 +28,33 @@ app.get("/", function(req, res, next) {
 
 app.listen(config.PORT, config.HOSTNAME, function() {
     console.log("Listening on " + config.HOSTNAME + ":" + String(config.PORT));
-    phantom.init();
-    puppeteer.init();
+    init();
 });
 
 process.on("exit", function() {
     console.log("Exiting on user's request");
-    phantom.destroy();
-    puppeteer.destroy();
+    destroy();
 });
+
+function init() {
+    initEngines();
+}
+
+function destroy() {
+    destroyEngines();
+}
+
+function initEngines() {
+    Object.keys(ENGINES).forEach(function(key) {
+        ENGINES[key].init();
+    });
+}
+
+function destroyEngines() {
+    Object.keys(ENGINES).forEach(function(key) {
+        ENGINES[key].destroy();
+    });
+}
 
 function verifyKey(req) {
     if (!config.KEY) {
