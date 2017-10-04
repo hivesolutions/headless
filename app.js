@@ -10,6 +10,11 @@ const config = require("./lib/util/config");
 // by the application for serving
 const app = express();
 
+process.on("exit", function() {
+    console.log("Exiting on user's request");
+    base.destroy();
+});
+
 app.get("/", function(req, res, next) {
     async function clojure() {
         base.verifyKey(req);
@@ -23,9 +28,4 @@ app.get("/", function(req, res, next) {
 app.listen(config.PORT, config.HOSTNAME, function() {
     console.log("Listening on " + config.HOSTNAME + ":" + String(config.PORT));
     base.init();
-});
-
-process.on("exit", function() {
-    console.log("Exiting on user's request");
-    base.destroy();
 });
