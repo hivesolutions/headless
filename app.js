@@ -1,5 +1,3 @@
-/* jshint esversion: 7 */
-
 // requires the multiple libraries
 const express = require("express");
 const process = require("process");
