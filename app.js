@@ -18,7 +18,8 @@ app.get("/", function(req, res, next) {
         base.verifyKey(req);
         const engine = req.query.engine || "puppeteer";
         var engineModule = base.ENGINES[engine];
-        await engineModule.render(req, res, next);
+        var engineInstance = engineModule.singleton();
+        await engineInstance.render(req, res, next);
     }
     clojure().catch(next);
 });
