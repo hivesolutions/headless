@@ -7,5 +7,8 @@ module.exports = {
         "semi": ["error", "always"],
         "space-before-function-paren": ["error", "never"],
         "mocha/no-exclusive-tests": "error"
+    },
+    "env": {
+        "jasmine": true
     }
 };
