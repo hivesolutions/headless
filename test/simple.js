@@ -19,3 +19,11 @@ describe("ENGINES", function() {
         assert.equal(true, Object.keys(base.ENGINES).length > 0);
     });
 });
+
+describe("init", function() {
+    it("should work", function() {
+        assert.doesNotThrow(function() {
+            base.init();
+        });
+    });
+})
