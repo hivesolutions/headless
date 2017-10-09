@@ -9,7 +9,7 @@
         "pdf"
     ],
     "author": "Hive Solutions",
-    "license": "ISC",
+    "license": "Apache-2.0",
     "dependencies": {
         "mz": "^2.7.0",
         "express": "^4.16.1",
