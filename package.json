@@ -3,7 +3,9 @@
     "version": "0.1.0",
     "description": "Simple Web App for headless functions",
     "main": "app.js",
-    "scripts": {},
+    "scripts": {
+        "test": "mocha"
+    },
     "keywords": [
         "headless",
         "pdf"
@@ -18,6 +20,7 @@
         "uuid": "^3.1.0"
     },
     "devDependencies": {
+        "mocha": "^4.0.1",
         "eslint": "^3.19",
         "eslint-config-standard": "^10.2.1",
         "eslint-plugin-import": "^2.7.0",
