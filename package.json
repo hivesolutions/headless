@@ -1,5 +1,5 @@
 {
-    "name": "headless",
+    "name": "hive-headless",
     "version": "0.1.0",
     "description": "Simple Web App for headless functions",
     "main": "app.js",
