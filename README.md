@@ -1,6 +1,6 @@
 # [Headless](https://headless.hive.pt)
 
-Simple headless browser API.
+Simple headless browser API to render images (PNG, JPEG, etc.) and PDFs from plain HTML.
 
 ## Configuration
 
