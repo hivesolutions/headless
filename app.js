@@ -8,12 +8,12 @@ const config = require("./lib/util/config");
 // by the application for serving
 const app = express();
 
-process.on("exit", function() {
+process.on("exit", () => {
     console.log("Exiting on user's request");
     base.destroy();
 });
 
-app.get("/", function(req, res, next) {
+app.get("/", (req, res, next) => {
     async function clojure() {
         base.verifyKey(req);
         const engine = req.query.engine || "puppeteer";
@@ -24,7 +24,7 @@ app.get("/", function(req, res, next) {
     clojure().catch(next);
 });
 
-app.listen(config.PORT, config.HOSTNAME, function() {
+app.listen(config.PORT, config.HOSTNAME, () => {
     console.log("Listening on " + config.HOSTNAME + ":" + String(config.PORT));
     base.init();
 });
