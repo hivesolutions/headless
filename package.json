@@ -6,6 +6,10 @@
     "scripts": {
         "test": "mocha"
     },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hivesolutions/headless.git"
+    },
     "keywords": [
         "headless",
         "pdf"
