@@ -1,5 +1,5 @@
 var assert = require("assert");
-var base = require("../lib/util/base");
+var lib = require("../lib");
 
 describe("Array", function() {
     describe("#indexOf()", function() {
@@ -16,6 +16,6 @@ describe("Array", function() {
 
 describe("ENGINES", function() {
     it("should not be empty", () => {
-        assert.equal(true, Object.keys(base.ENGINES).length > 0);
+        assert.equal(true, Object.keys(lib.ENGINES).length > 0);
     });
 });
