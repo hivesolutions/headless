@@ -17,6 +17,10 @@
     ],
     "author": "Hive Solutions",
     "license": "Apache-2.0",
+    "bugs": {
+        "url": "https://github.com/hivesolutions/headless/issues"
+    },
+    "homepage": "https://github.com/hivesolutions/headless#readme",
     "dependencies": {
         "mz": "^2.7.0",
         "express": "^4.16.1",
