@@ -1,9 +1,0 @@
-*.log
-
-.travis.yml
-.eslintrc.js
-
-Dockerfile
-Dockerfile.rolling
-
-/.vscode
