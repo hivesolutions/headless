@@ -4,6 +4,7 @@
     "description": "Simple Web App for headless functions",
     "main": "app.js",
     "scripts": {
+        "start": "node app.js",
         "test": "mocha"
     },
     "repository": {
