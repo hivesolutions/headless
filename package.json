@@ -29,18 +29,18 @@
     ],
     "dependencies": {
         "mz": "^2.7.0",
-        "express": "^4.16.1",
-        "phantom": "^4.0.5",
-        "puppeteer": "^0.11.0",
+        "express": "^4.16.2",
+        "phantom": "^4.0.8",
+        "puppeteer": "^0.13.0",
         "uuid": "^3.1.0"
     },
     "devDependencies": {
         "mocha": "^4.0.1",
-        "eslint": "^3.19",
+        "eslint": "^4.11.0",
         "eslint-config-standard": "^10.2.1",
-        "eslint-plugin-import": "^2.7.0",
-        "eslint-plugin-node": "^5.2.0",
-        "eslint-plugin-promise": "^3.5.0",
+        "eslint-plugin-import": "^2.8.0",
+        "eslint-plugin-node": "^5.2.1",
+        "eslint-plugin-promise": "^3.6.0",
         "eslint-plugin-standard": "^3.0.1",
         "eslint-plugin-mocha": "^4.11.0"
     }
