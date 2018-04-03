@@ -12,6 +12,10 @@ process.on("SIGINT", function() {
     process.exit();
 });
 
+process.on("SIGTERM", function() {
+    process.exit();
+});
+
 process.on("exit", () => {
     util.Logging.info("Exiting on user's request");
     lib.destroy();
