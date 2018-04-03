@@ -1,12 +1,16 @@
 // requires the multiple libraries
-const util = require("hive-js-util");
 const express = require("express");
 const process = require("process");
+const util = require("hive-js-util");
 const lib = require("./lib");
 
 // builds the initial application object to be used
 // by the application for serving
 const app = express();
+
+process.on("SIGINT", function() {
+    process.exit();
+});
 
 process.on("exit", () => {
     util.Logging.info("Exiting on user's request");
