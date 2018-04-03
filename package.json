@@ -28,8 +28,9 @@
         "test/**/*.js"
     ],
     "dependencies": {
-        "mz": "^2.7.0",
         "express": "^4.16.3",
+        "hive-js-util": "^0.1.12",
+        "mz": "^2.7.0",
         "phantom": "^4.0.12",
         "puppeteer": "^1.2.0",
         "uuid": "^3.2.1"
