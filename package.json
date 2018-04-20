@@ -6,7 +6,7 @@
     "scripts": {
         "start": "node app.js",
         "test": "mocha",
-        "upgrade": "ncu -u"
+        "upgrade": "ncu -au"
     },
     "repository": {
         "type": "git",
