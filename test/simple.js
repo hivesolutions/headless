@@ -1,5 +1,5 @@
-var assert = require("assert");
-var lib = require("../lib");
+const assert = require("assert");
+const lib = require("../lib");
 
 describe("Array", function() {
     describe("#indexOf()", function() {
