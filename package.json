@@ -25,7 +25,7 @@
     },
     "scripts": {
         "start": "node app.js",
-        "test": "mocha",
+        "test": "mocha --recursive",
         "upgrade": "npx sort-package-json && ncu -au"
     },
     "dependencies": {
