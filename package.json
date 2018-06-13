@@ -26,6 +26,7 @@
     "scripts": {
         "start": "node app.js",
         "lint": "eslint ./**/*.js",
+        "prettier": "prettier ./**/*.js --write",
         "test": "mocha --recursive",
         "upgrade": "npx sort-package-json && ncu -au"
     },
@@ -43,6 +44,7 @@
         "eslint-config-hive": "^0.1.2",
         "mocha": "^5.2.0",
         "npm-check-updates": "^2.14.2",
+        "prettier": "^1.13.5",
         "sort-package-json": "^1.15.0"
     }
 }
