@@ -10,6 +10,10 @@
     "bugs": {
         "url": "https://github.com/hivesolutions/headless/issues"
     },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hivesolutions/headless.git"
+    },
     "license": "Apache-2.0",
     "author": "Hive Solutions",
     "files": [
@@ -19,24 +23,20 @@
         "test/**/*.js"
     ],
     "main": "app.js",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/hivesolutions/headless.git"
-    },
     "scripts": {
-        "start": "node app.js",
         "lint": "eslint ./**/*.js",
-        "prettier": "prettier ./**/*.js --write",
+        "start": "node app.js",
         "test": "mocha --recursive",
+        "prettier": "prettier ./**/*.js --write",
         "upgrade": "npx sort-package-json && ncu -au"
     },
     "dependencies": {
         "consola": "^1.4.1",
         "express": "^4.16.3",
-        "hive-js-util": "^0.1.15",
+        "hive-js-util": "^0.1.20",
         "mz": "^2.7.0",
         "phantom": "^4.0.12",
-        "puppeteer": "^1.4.0",
+        "puppeteer": "^1.5.0",
         "uuid": "^3.2.1"
     },
     "devDependencies": {
