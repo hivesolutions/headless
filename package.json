@@ -25,7 +25,7 @@
     },
     "scripts": {
         "start": "node app.js",
-        "lint": "eslint **/*.js",
+        "lint": "eslint ./**/*.js",
         "test": "mocha --recursive",
         "upgrade": "npx sort-package-json && ncu -au"
     },
