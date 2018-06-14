@@ -1,3 +1,1 @@
-module.exports = {
-    tabWidth: 4
-};
+module.exports = require("prettier-config-hive");
