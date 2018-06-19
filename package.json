@@ -27,7 +27,7 @@
         "lint": "eslint ./**/*.js",
         "start": "node app.js",
         "test": "mocha --recursive",
-        "prettier": "prettier ./**/*.js --write",
+        "prettier": "prettier './**/*.js' --write",
         "upgrade": "npx sort-package-json && ncu -au"
     },
     "dependencies": {
