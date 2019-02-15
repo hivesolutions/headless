@@ -26,8 +26,8 @@ app.get("/", (req, res, next) => {
     async function clojure() {
         lib.verifyKey(req);
         const engine = req.query.engine || "puppeteer";
-        var engineModule = lib.ENGINES[engine];
-        var engineInstance = engineModule.singleton();
+        const engineModule = lib.ENGINES[engine];
+        const engineInstance = engineModule.singleton();
         await engineInstance.render(req, res, next);
     }
     clojure().catch(next);
