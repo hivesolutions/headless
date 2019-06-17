@@ -31,21 +31,21 @@
         "upgrade": "npx sort-package-json && ncu -u"
     },
     "dependencies": {
-        "consola": "^2.5.7",
-        "express": "^4.16.4",
+        "consola": "^2.7.1",
+        "express": "^4.17.1",
         "hive-js-util": "^0.2.0",
         "mz": "^2.7.0",
-        "phantom": "^6.0.3",
-        "puppeteer": "^1.13.0",
+        "phantom": "^6.2.0",
+        "puppeteer": "^1.17.0",
         "uuid": "^3.3.2"
     },
     "devDependencies": {
-        "eslint": "^5.15.3",
-        "eslint-config-hive": "^0.1.8",
-        "mocha": "^6.0.2",
-        "npm-check-updates": "^3.1.1",
-        "prettier": "^1.16.4",
+        "eslint": "^5.16.0",
+        "eslint-config-hive": "^0.1.21",
+        "mocha": "^6.1.4",
+        "npm-check-updates": "^3.1.10",
+        "prettier": "^1.18.2",
         "prettier-config-hive": "^0.1.1",
-        "sort-package-json": "^1.21.0"
+        "sort-package-json": "^1.22.1"
     }
 }
