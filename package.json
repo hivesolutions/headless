@@ -25,25 +25,27 @@
     "main": "app.js",
     "scripts": {
         "lint": "eslint \"./**/*.js\"",
+        "lint-fix": "eslint \"./**/*.js\" --fix",
         "prettier": "prettier \"./**/*.{js,json}\" --write",
+        "pretty": "npm run prettier && npm run lint-fix",
         "start": "node app.js",
         "test": "mocha --recursive",
         "upgrade": "npx sort-package-json && ncu -u"
     },
     "dependencies": {
-        "consola": "^2.9.0",
+        "consola": "^2.10.1",
         "express": "^4.17.1",
         "hive-js-util": "^0.2.1",
         "mz": "^2.7.0",
-        "phantom": "^6.2.0",
-        "puppeteer": "^1.19.0",
-        "uuid": "^3.3.2"
+        "phantom": "^6.3.0",
+        "puppeteer": "^1.20.0",
+        "uuid": "^3.3.3"
     },
     "devDependencies": {
-        "eslint": "^6.1.0",
-        "eslint-config-hive": "^0.1.21",
+        "eslint": "^6.4.0",
+        "eslint-config-hive": "^0.1.22",
         "mocha": "^6.2.0",
-        "npm-check-updates": "^3.1.20",
+        "npm-check-updates": "^3.1.23",
         "prettier": "^1.18.2",
         "prettier-config-hive": "^0.1.1",
         "sort-package-json": "^1.22.1"
