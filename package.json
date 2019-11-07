@@ -35,19 +35,20 @@
     "dependencies": {
         "consola": "^2.10.1",
         "express": "^4.17.1",
-        "hive-js-util": "^0.2.1",
+        "hive-js-util": "^0.2.2",
         "mz": "^2.7.0",
         "phantom": "^6.3.0",
-        "puppeteer": "^1.20.0",
-        "uuid": "^3.3.3"
+        "puppeteer": "^2.0.0",
+        "uuid": "^3.3.3",
+        "yonius": "^0.2.12"
     },
     "devDependencies": {
-        "eslint": "^6.5.1",
-        "eslint-config-hive": "^0.1.22",
-        "mocha": "^6.2.1",
-        "npm-check-updates": "^3.1.23",
+        "eslint": "^6.6.0",
+        "eslint-config-hive": "^0.2.2",
+        "mocha": "^6.2.2",
+        "npm-check-updates": "^3.2.0",
         "prettier": "^1.18.2",
         "prettier-config-hive": "^0.1.1",
-        "sort-package-json": "^1.22.1"
+        "sort-package-json": "^1.23.1"
     }
 }
