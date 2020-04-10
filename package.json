@@ -16,13 +16,13 @@
     },
     "license": "Apache-2.0",
     "author": "Hive Solutions",
+    "main": "app.js",
     "files": [
         "app.js",
         "lib/**/*.css",
         "lib/**/*.js",
         "test/**/*.js"
     ],
-    "main": "app.js",
     "scripts": {
         "dev": "nodemon app.js",
         "lint": "eslint \"./**/*.js\"",
