@@ -25,7 +25,7 @@ RUN apt-get install -y gconf-service libasound2 libatk1.0-0 libc6\
     libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3\
     libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates\
     fonts-liberation fonts-emojione libappindicator1 libnss3 lsb-release\
-    xdg-utils wget    
+    xdg-utils wget
 RUN npm install
 
 CMD ["/usr/bin/node", "/app/app.js"]
