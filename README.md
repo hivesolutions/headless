@@ -9,9 +9,9 @@ Simple headless browser API to render images (PNG, JPEG, etc.) and PDFs from pla
 
 ## Configuration
 
-| Name | Type | Default | Description |
-| ----- | ----- | ----- | ----- |
-| `HEADLESS_KEY` | `str` | `None` | Secret key that should be passed in protected calls so that the server side "trusts" the client side (authentication). |
+| Name           | Type  | Default | Description                                                                                                            |
+| -------------- | ----- | ------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `HEADLESS_KEY` | `str` | `None`  | Secret key that should be passed in protected calls so that the server side "trusts" the client side (authentication). |
 
 ## License
 
