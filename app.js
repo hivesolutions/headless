@@ -34,11 +34,19 @@ app.get("/", (req, res, next) => {
 });
 
 app.get("/info", (req, res, next) => {
-    res.json({
-        name: info.name,
-        version: info.version,
-        node: process.version
-    });
+    async function clojure() {
+        res.json({
+            name: info.name,
+            version: info.version,
+            node: process.version,
+            engines: await Promise.all(
+                Object.entries(lib.ENGINES).map(async ([name, module]) => {
+                    return [name, await module.singleton().version()];
+                })
+            )
+        });
+    }
+    clojure().catch(next);
 });
 
 (async () => {
