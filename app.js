@@ -8,6 +8,7 @@ const lib = require("./lib");
 // builds the initial application object to be used
 // by the application for serving
 const app = express();
+app.use(express.raw({ limit: "1GB", type: "*/*" }));
 
 process.on("SIGINT", function() {
     process.exit();
@@ -23,6 +24,17 @@ process.on("exit", () => {
 });
 
 app.get("/", (req, res, next) => {
+    async function clojure() {
+        lib.verifyKey(req);
+        const engine = req.query.engine || "puppeteer";
+        const engineModule = lib.ENGINES[engine];
+        const engineInstance = engineModule.singleton();
+        await engineInstance.render(req, res, next);
+    }
+    clojure().catch(next);
+});
+
+app.post("/", (req, res, next) => {
     async function clojure() {
         lib.verifyKey(req);
         const engine = req.query.engine || "puppeteer";
