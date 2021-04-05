@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *
 
+## [0.1.8] - 2021-04-06
+
+### Added
+
+* Simple file touch
+
 ## [0.1.7] - 2021-04-05
 
 ### Fixed
