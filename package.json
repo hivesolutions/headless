@@ -40,12 +40,12 @@
         "jimp": "^0.16.1",
         "mz": "^2.7.0",
         "phantom": "^6.3.0",
-        "puppeteer": "^8.0.0",
+        "puppeteer": "^5.5.0",
         "uuid": "^8.3.2",
-        "yonius": "^0.7.5"
+        "yonius": "^0.7.6"
     },
     "devDependencies": {
-        "eslint": "^7.22.0",
+        "eslint": "^7.23.0",
         "eslint-config-hive": "^0.5.3",
         "mocha": "^8.3.2",
         "nodemon": "^2.0.7",
