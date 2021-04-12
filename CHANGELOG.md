@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *
 
+## [0.1.11] - 2021-04-12
+
+### Fixed
+
+* Fixed puppeteer version back to 5.3.1
+
 ## [0.1.10] - 2021-04-07
 
 ### Added

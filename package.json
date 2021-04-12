@@ -1,6 +1,6 @@
 {
     "name": "hive-headless",
-    "version": "0.1.10",
+    "version": "0.1.11",
     "description": "Simple Web App for headless functions",
     "keywords": [
         "headless",
