@@ -20,6 +20,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *
 
+## [0.1.13] - 2021-04-15
+
+### Changed
+
+* Added new Chrome initialization flags
+* Trying puppeteer version 8.x.x
+
 ## [0.1.12] - 2021-04-13
 
 ### Fixed
