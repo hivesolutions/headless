@@ -13,12 +13,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-* New Chrome initialization flags
-* More efficient PDF processing
+*
 
 ### Fixed
 
 *
+
+## [0.1.14] - 2021-04-15
+
+### Changed
+
+* New Chrome initialization flags
+* More efficient PDF processing
 
 ## [0.1.13] - 2021-04-15
 
