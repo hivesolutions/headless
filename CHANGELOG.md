@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-*
+* Added new Chrome initialization flags
+* Trying puppeteer version 8.x.x
 
 ### Fixed
 
