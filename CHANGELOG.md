@@ -19,7 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *
 
-## [0.2.0] - 2021-04-15
+## [0.2.1] - 2021-10-22
+
+### Fixed
+
+* Erroneous bumping of the eslint package
+
+## [0.2.0] - 2021-10-22
 
 ### Added
 
