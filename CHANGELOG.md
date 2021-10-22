@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* Reload flag support, with default value being `false`
+*
 
 ### Changed
 
@@ -18,6 +18,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 *
+
+## [0.2.0] - 2021-04-15
+
+### Added
+
+* Reload flag support, with default value being `false`
+
+### Changed
+
+* Bumped packages
 
 ## [0.1.15] - 2021-04-15
 
