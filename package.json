@@ -47,6 +47,7 @@
     "devDependencies": {
         "eslint": "^8.33.0",
         "eslint-config-hive": "^0.6.0",
+        "eslint-plugin-n": "^15.6.1",
         "mocha": "^10.2.0",
         "nodemon": "^2.0.20",
         "npm-check-updates": "^16.6.3",
