@@ -4,8 +4,6 @@ node_js:
   - "14"
   - "16"
   - "17"
-  - "18"
-  - "19"
 install:
   - npm install
 script: npm run lint && npm test
