@@ -9,15 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+*
+
+### Changed
+
+*
+
+### Fixed
+
+*
+
+## [0.2.4] - 2023-03-23
+
+### Added
+
 * Added CJK fonts
 
 ### Changed
 
 * Bumped dependencies
-
-### Fixed
-
-*
 
 ## [0.2.3] - 2022-03-04
 
