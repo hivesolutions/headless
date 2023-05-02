@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-*
+* Issue with wrong handling of PDFs, that was generating memory leaks
 
 ## [0.2.4] - 2023-03-23
 
