@@ -16,7 +16,7 @@ ADD lib /app/lib
 
 WORKDIR /app
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 RUN DEBIAN_FRONTEND=noninteractive apt-get update &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -y bzip2 fontconfig\
     libpangocairo-1.0-0 nodejs
