@@ -13,6 +13,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+*
+
+### Fixed
+
+*
+
+## [0.2.6] - 2023-04-03
+
+### Changed
+
 * Simplified trim operation to an all in memory operation
 
 ### Fixed
