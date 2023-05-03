@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *
 
-## [0.2.6] - 2023-04-03
+## [0.2.6] - 2023-05-03
 
 ### Changed
 
@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Docker images updated - Puppeteer just dropped node14 support
 
-## [0.2.5] - 2023-04-02
+## [0.2.5] - 2023-05-02
 
 ### Changed
 
