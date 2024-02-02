@@ -10,11 +10,11 @@ const lib = require("./lib");
 const app = express();
 app.use(express.raw({ limit: "1GB", type: "*/*" }));
 
-process.on("SIGINT", function() {
+process.on("SIGINT", function () {
     process.exit();
 });
 
-process.on("SIGTERM", function() {
+process.on("SIGTERM", function () {
     process.exit();
 });
 
