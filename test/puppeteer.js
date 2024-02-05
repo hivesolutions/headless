@@ -1,7 +1,7 @@
 const assert = require("assert");
 const puppeteer = require("../lib/engines/puppeteer");
 
-describe("PUPPETEER", function () {
+describe("PUPPETEER", function() {
     this.timeout(5000);
 
     it("should render a pdf", async () => {
@@ -16,10 +16,10 @@ describe("PUPPETEER", function () {
             body: {}
         };
         const res = {
-            send: function (data) {
+            send: function(data) {
                 this.data = data;
             },
-            type: function (file) {
+            type: function(file) {
                 this.file = file;
             }
         };
