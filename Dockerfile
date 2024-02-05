@@ -28,7 +28,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y gconf-service\
     libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6\
     libgbm-dev ca-certificates fonts-liberation fonts-emojione\
     ttf-wqy-zenhei ttf-wqy-microhei fonts-arphic-ukai fonts-noto-cjk fonts-arphic-uming\
-    libappindicator1 libnss3 lsb-release xdg-utils wget
+    libappindicator1 libnss3 lsb-release xdg-utils wget &&\
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN npm install
 
 CMD ["/usr/bin/node", "/app/app.js"]
