@@ -1,9 +1,10 @@
-dist: bionic
+dist: jammy
 language: node_js
 node_js:
   - "18"
   - "19"
   - "20"
+  - "21"
 install:
   - npm install
 script: npm run lint && npm test
