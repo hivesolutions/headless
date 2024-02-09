@@ -21,7 +21,6 @@ jobs:
             libgbm-dev ca-certificates fonts-liberation \
             ttf-wqy-zenhei ttf-wqy-microhei fonts-arphic-ukai fonts-noto-cjk fonts-arphic-uming\
             libappindicator1 libnss3 lsb-release xdg-utils
-      - uses: actions/checkout@v4
       - run: node --version
       - run: npm install
       - run: npm install --only=dev
