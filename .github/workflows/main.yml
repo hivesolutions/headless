@@ -11,6 +11,7 @@ jobs:
     container: node:${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v4
+      - run: rm -rf ~/.npm
       - run: node --version
       - run: npm install
         env:
