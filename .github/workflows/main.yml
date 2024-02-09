@@ -15,5 +15,5 @@ jobs:
       - run: npm install
       - run: npm install --only=dev
       - run: npm run lint
-      - run: node node_modules/puppeteer/install.js
+      - run: node node_modules/puppeteer/install.mjs
       - run: npm test
