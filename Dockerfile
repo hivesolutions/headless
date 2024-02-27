@@ -9,7 +9,6 @@ ENV LEVEL INFO
 ENV HOST 0.0.0.0
 ENV PORT 8080
 ENV NODE_ENV production
-ENV PUPPETEER_CHROMIUM_REVISION stable
 
 ADD app.js /app/
 ADD package.json /app/
@@ -30,6 +29,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y gconf-service\
     libgbm-dev ca-certificates fonts-liberation fonts-emojione\
     ttf-wqy-zenhei ttf-wqy-microhei fonts-arphic-ukai fonts-noto-cjk fonts-arphic-uming\
     libappindicator1 libnss3 lsb-release xdg-utils wget
-RUN npm install
+RUN PUPPETEER_CHROMIUM_REVISION=stable npm install
 
 CMD ["/usr/bin/node", "/app/app.js"]
