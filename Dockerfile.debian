@@ -30,6 +30,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y gconf-service\
     libgbm-dev ca-certificates fonts-liberation fonts-noto-color-emoji\
     ttf-wqy-zenhei ttf-wqy-microhei fonts-arphic-ukai fonts-noto-cjk fonts-arphic-uming\
     libappindicator1 libnss3 lsb-release xdg-utils wget
-RUN npm install
+RUN PUPPETEER_CHROMIUM_REVISION=stable npm install
 
 CMD ["/usr/bin/node", "/app/app.js"]
