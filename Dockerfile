@@ -9,6 +9,7 @@ ENV LEVEL INFO
 ENV HOST 0.0.0.0
 ENV PORT 8080
 ENV NODE_ENV production
+ENV PUPPETEER_CHROMIUM_REVISION stable
 
 ADD app.js /app/
 ADD package.json /app/
