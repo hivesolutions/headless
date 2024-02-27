@@ -37,24 +37,24 @@
         "consola": "^2.15.3",
         "express": "^4.18.2",
         "hive-js-util": "^0.4.1",
-        "jimp": "^0.22.10",
+        "jimp": "^0.22.12",
         "mz": "^2.7.0",
         "ncu": "^0.2.1",
         "phantom": "^6.3.0",
         "playwright": "^1.41.2",
-        "puppeteer": "^22.0.0",
+        "puppeteer": "^22.3.0",
         "uuid": "^9.0.1",
         "yonius": "^0.13.11"
     },
     "devDependencies": {
-        "eslint": "^8.56.0",
+        "eslint": "^8.57.0",
         "eslint-config-hive": "^0.6.0",
         "eslint-plugin-n": "^16.6.2",
         "mocha": "^10.3.0",
-        "nodemon": "^3.0.3",
-        "npm-check-updates": "^16.14.14",
+        "nodemon": "^3.1.0",
+        "npm-check-updates": "^16.14.15",
         "prettier": "^3.2.5",
         "prettier-config-hive": "^0.1.7",
-        "sort-package-json": "^2.7.0"
+        "sort-package-json": "^2.8.0"
     }
 }
