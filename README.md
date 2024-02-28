@@ -1,17 +1,17 @@
 # [Headless](https://headless.hive.pt)
 
-Simple headless browser API to render images (PNG, JPEG, etc.) and PDFs from plain HTML.
+Simple headless browser API to render images (PNG, JPEG, and WEBP) and PDFs from plain HTML.
 
 ## Features
 
 * Capture of webpages as PNG and PDFs
-* Multiple back-end engines: [Phantom.js](https://phantomjs.org) and [Puppeteer](https://github.com/GoogleChrome/puppeteer)
+* Multiple back-end engines: [Phantom.js](https://phantomjs.org) and [Puppeteer](https://github.com/puppeteer/puppeteerr)
 
 ## Configuration
 
 | Name           | Type  | Default | Description                                                                                                            |
 | -------------- | ----- | ------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `HEADLESS_KEY` | `str` | `None`  | Secret key that should be passed in protected calls so that the server side "trusts" the client side (authentication). |
+| `HEADLESS_KEY` | `str` | `None`  | Secret key that should be passed in protected calls so that the server-side "trusts" the client side (authentication). |
 
 ## License
 
