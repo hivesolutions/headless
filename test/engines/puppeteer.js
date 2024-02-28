@@ -42,6 +42,34 @@ describe("Puppeteer", function() {
         }
     });
 
+    it("should render a jpeg", async () => {
+        const engine = new puppeteer.Puppeteer();
+        await engine.init();
+
+        try {
+            const req = {
+                query: {
+                    url: "https://example.com/",
+                    format: "jpeg"
+                },
+                body: {}
+            };
+            const res = {
+                send: function(data) {
+                    this.data = data;
+                },
+                type: function(file) {
+                    this.file = file;
+                }
+            };
+            await engine.render(req, res);
+            assert.ok(res.data);
+            assert.strictEqual(res.file, "jpeg");
+        } finally {
+            await engine.destroy();
+        }
+    });
+
     it("should open new page", async () => {
         const engine = new puppeteer.Puppeteer();
         await engine.init();
