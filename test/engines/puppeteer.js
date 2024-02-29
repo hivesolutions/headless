@@ -105,6 +105,36 @@ describe("Puppeteer", function() {
         }
     });
 
+    it("should render a WebP", async () => {
+        const engine = new puppeteer.Puppeteer();
+        await engine.init();
+
+        try {
+            const req = {
+                query: {
+                    url: "https://example.com/",
+                    format: "webp"
+                },
+                body: {}
+            };
+            const res = {
+                send: function(data) {
+                    this.data = data;
+                },
+                type: function(file) {
+                    this.file = file;
+                }
+            };
+            await engine.render(req, res);
+            assert.ok(res.data);
+            assert.strictEqual(res.file, "webp");
+            assert.ok(res.data.slice(0, 4).equals(Buffer.from([0x52, 0x49, 0x46, 0x46])));
+            assert.ok(res.data.slice(8, 12).equals(Buffer.from([0x57, 0x45, 0x42, 0x50])));
+        } finally {
+            await engine.destroy();
+        }
+    });
+
     it("should open new page", async () => {
         const engine = new puppeteer.Puppeteer();
         await engine.init();
