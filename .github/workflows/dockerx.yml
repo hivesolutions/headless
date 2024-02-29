@@ -35,6 +35,6 @@ jobs:
         with:
           context: .
           file: Dockerfile.multiarch
-          platforms: 'linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x'
+          platforms: 'linux/amd64,linux/arm/v7,linux/arm64/v8'
           push: true
           tags: 'hivesolutions/headless-multiarch:${{ steps.set_tag.outputs.tag }}'
