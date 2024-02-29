@@ -37,4 +37,4 @@ jobs:
           file: Dockerfile.chromium
           platforms: 'linux/amd64,linux/arm/v7,linux/arm64/v8'
           push: true
-          tags: 'hivesolutions/headless-multiarch:${{ steps.set_tag.outputs.tag }}'
+          tags: 'hivesolutions/headless-chromium:${{ steps.set_tag.outputs.tag }}'
