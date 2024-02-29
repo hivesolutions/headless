@@ -5,7 +5,7 @@ Simple headless browser API to render images (PNG, JPEG, WebP, etc.) and PDFs fr
 ## Features
 
 * Capture of webpages as PNG and PDFs
-* Multiple back-end engines: [Phantom.js](https://phantomjs.org) and [Puppeteer](https://github.com/puppeteer/puppeteerr)
+* Multiple back-end engines: [Phantom.js](https://phantomjs.org) and [Puppeteer](https://github.com/puppeteer/puppeteer)
 
 ## Configuration
 
