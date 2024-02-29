@@ -105,7 +105,7 @@ describe("Puppeteer", function() {
         }
     });
 
-    it("should render a WEBP", async () => {
+    it("should render a WebP", async () => {
         const engine = new puppeteer.Puppeteer();
         await engine.init();
 
