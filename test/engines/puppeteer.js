@@ -135,6 +135,66 @@ describe("Puppeteer", function() {
         }
     });
 
+    it("should render a TIFF", async () => {
+        const engine = new puppeteer.Puppeteer();
+        await engine.init();
+
+        try {
+            const req = {
+                query: {
+                    url: "https://example.com/",
+                    format: "tiff"
+                },
+                body: {}
+            };
+            const res = {
+                send: function(data) {
+                    this.data = data;
+                },
+                type: function(file) {
+                    this.file = file;
+                }
+            };
+            await engine.render(req, res);
+            assert.ok(res.data);
+            assert.strictEqual(res.file, "tiff");
+            const littleEndian = res.data.slice(0, 4).equals(Buffer.from([0x49, 0x49, 0x2a, 0x00]));
+            const bigEndian = res.data.slice(0, 4).equals(Buffer.from([0x4d, 0x4d, 0x00, 0x2a]));
+            assert.ok(littleEndian || bigEndian);
+        } finally {
+            await engine.destroy();
+        }
+    });
+
+    it("should render a BMP", async () => {
+        const engine = new puppeteer.Puppeteer();
+        await engine.init();
+
+        try {
+            const req = {
+                query: {
+                    url: "https://example.com/",
+                    format: "bmp"
+                },
+                body: {}
+            };
+            const res = {
+                send: function(data) {
+                    this.data = data;
+                },
+                type: function(file) {
+                    this.file = file;
+                }
+            };
+            await engine.render(req, res);
+            assert.ok(res.data);
+            assert.strictEqual(res.file, "bmp");
+            assert.ok(res.data.slice(0, 2).equals(Buffer.from([0x42, 0x4d])));
+        } finally {
+            await engine.destroy();
+        }
+    });
+
     it("should open new page", async () => {
         const engine = new puppeteer.Puppeteer();
         await engine.init();
