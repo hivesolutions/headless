@@ -15,7 +15,7 @@ Simple headless browser API to render images (PNG, JPEG, WebP, etc.) and PDFs fr
 
 ## Docker Images
 
-Headless is available on Docker Hub with the following tags:
+Headless is available on [Docker Hub](https://hub.docker.com/r/hivesolutions/headless) with the following tags:
 
 | Tag        | Description                                        | Supported Architectures                         |
 | ---------- | -------------------------------------------------- | ----------------------------------------------- |
