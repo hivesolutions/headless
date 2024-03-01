@@ -8,9 +8,9 @@ on:
   workflow_dispatch: null
 jobs:
   build:
-    runs-on: linux
     name: Build
     timeout-minutes: 60
+    runs-on: linux
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
