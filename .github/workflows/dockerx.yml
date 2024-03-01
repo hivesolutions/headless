@@ -23,12 +23,10 @@ jobs:
       - name: Set tag name based on branch
         id: set_tag
         run: |
-          if [[ "${{ github.ref_name }}" == "master" ]]; then
-            echo "tag=latest" >> $GITHUB_OUTPUT
-          else
+          if [[ "${{ github.ref_name }}" != "master" ]]; then
             GITHUB_REFNAME=${{ github.ref_name }}
             BRANCH_NAME=${GITHUB_REFNAME//\//_}
-            echo "tag=latest-$BRANCH_NAME" >> $GITHUB_OUTPUT
+            echo "tag=-$BRANCH_NAME" >> $GITHUB_OUTPUT
           fi
       - name: Build and push
         uses: docker/build-push-action@v5
@@ -37,4 +35,4 @@ jobs:
           file: Dockerfile.chromium
           platforms: 'linux/amd64,linux/arm/v7,linux/arm64/v8'
           push: true
-          tags: 'hivesolutions/headless-chromium:${{ steps.set_tag.outputs.tag }}'
+          tags: 'hivesolutions/headless:chromium${{ steps.set_tag.outputs.tag }}'
