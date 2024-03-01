@@ -1,5 +1,5 @@
 name: Build and Push Headless Images
-'on':
+on:
   schedule:
     - cron: 0 1 * * *
   push:
