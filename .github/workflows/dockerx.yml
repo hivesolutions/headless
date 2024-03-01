@@ -1,0 +1,38 @@
+name: Build and Push Headless Images
+on:
+  schedule:
+    - cron: 0 1 * * *
+  push:
+    branches-ignore:
+      - none
+  workflow_dispatch: null
+jobs:
+  build:
+    runs-on: linux
+    timeout-minutes: 60
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: '${{ secrets.DOCKERHUB_USERNAME }}'
+          password: '${{ secrets.DOCKERHUB_TOKEN }}'
+      - name: Set tag name based on branch
+        id: set_tag
+        run: |
+          if [[ "${{ github.ref_name }}" != "master" ]]; then
+            GITHUB_REFNAME=${{ github.ref_name }}
+            BRANCH_NAME=${GITHUB_REFNAME//\//_}
+            echo "tag=-$BRANCH_NAME" >> $GITHUB_OUTPUT
+          fi
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile.chromium
+          platforms: 'linux/amd64,linux/arm/v7,linux/arm64/v8'
+          push: true
+          tags: 'hivesolutions/headless:chromium${{ steps.set_tag.outputs.tag }}'
