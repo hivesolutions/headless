@@ -17,11 +17,11 @@ Simple headless browser API to render images (PNG, JPEG, WebP, etc.) and PDFs fr
 
 Headless is available on [Docker Hub](https://hub.docker.com/r/hivesolutions/headless) with the following tags:
 
-| Tag        | Description                                        | Supported Architectures                         |
-| ---------- | -------------------------------------------------- | ----------------------------------------------- |
-| `latest`   | The most up-to-date stable version.                | `linux/amd64`                                   |
-| `debian`   | Debian-based container for stability and security. | `linux/amd64`                                   |
-| `chromium` | Container using chromium instead of chrome.        | `linux/amd64`, `linux/arm/v7`, `linux/arm64/v8` |
+| Tag        | Description                                        | Supported Architectures       |
+| ---------- | -------------------------------------------------- | ----------------------------- |
+| `latest`   | The most up-to-date stable version.                | `amd64`                       |
+| `debian`   | Debian-based container for stability and security. | `amd64`                       |
+| `chromium` | Container using chromium instead of chrome.        | `amd64`, `arm/v7`, `arm64/v8` |
 
 ## License
 
