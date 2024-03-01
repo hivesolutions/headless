@@ -43,6 +43,38 @@ describe("Puppeteer", function() {
         }
     });
 
+    it("should render a PNG by default", async () => {
+        const engine = new puppeteer.Puppeteer();
+        await engine.init();
+
+        try {
+            const req = {
+                query: {
+                    url: "https://example.com/"
+                },
+                body: {}
+            };
+            const res = {
+                send: function(data) {
+                    this.data = data;
+                },
+                type: function(file) {
+                    this.file = file;
+                }
+            };
+            await engine.render(req, res);
+            assert.ok(res.data);
+            assert.strictEqual(res.file, "png");
+            assert.ok(
+                res.data
+                    .slice(0, 8)
+                    .equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))
+            );
+        } finally {
+            await engine.destroy();
+        }
+    });
+
     it("should render a PNG", async () => {
         const engine = new puppeteer.Puppeteer();
         await engine.init();
