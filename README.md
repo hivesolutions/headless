@@ -13,6 +13,16 @@ Simple headless browser API to render images (PNG, JPEG, WebP, TIFF, BMP, etc.) 
 | -------------- | ----- | ------- | ---------------------------------------------------------------------------------------------------------------------- |
 | `HEADLESS_KEY` | `str` | `None`  | Secret key that should be passed in protected calls so that the server-side "trusts" the client side (authentication). |
 
+## Docker Images
+
+Headless is available on [Docker Hub](https://hub.docker.com/r/hivesolutions/headless) with the following tags:
+
+| Tag        | Description                                        | Supported Architectures       |
+| ---------- | -------------------------------------------------- | ----------------------------- |
+| `latest`   | The most up-to-date stable version.                | `amd64`                       |
+| `debian`   | Debian-based container for stability and security. | `amd64`                       |
+| `chromium` | Container using chromium instead of chrome.        | `amd64`, `arm/v7`, `arm64/v8` |
+
 ## License
 
 Headless is currently licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/).
@@ -23,3 +33,4 @@ Headless is currently licensed under the [Apache License, Version 2.0](http://ww
 [![Build Status GitHub](https://github.com/hivesolutions/headless/workflows/Main%20Workflow/badge.svg)](https://github.com/hivesolutions/headless/actions)
 [![npm Status](https://img.shields.io/npm/v/hive-headless.svg)](https://www.npmjs.com/package/hive-headless)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/)
+
