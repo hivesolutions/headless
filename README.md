@@ -33,4 +33,3 @@ Headless is currently licensed under the [Apache License, Version 2.0](http://ww
 [![Build Status GitHub](https://github.com/hivesolutions/headless/workflows/Main%20Workflow/badge.svg)](https://github.com/hivesolutions/headless/actions)
 [![npm Status](https://img.shields.io/npm/v/hive-headless.svg)](https://www.npmjs.com/package/hive-headless)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/)
-
