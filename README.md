@@ -23,6 +23,13 @@ Headless is available on [Docker Hub](https://hub.docker.com/r/hivesolutions/hea
 | `debian`   | Debian-based container for stability and security. | `amd64`                       |
 | `chromium` | Container using chromium instead of chrome.        | `amd64`, `arm/v7`, `arm64/v8` |
 
+## Deployments
+
+| Provider | Stable  | URL                                                      |
+| -------- | ------- | -------------------------------------------------------- |
+| Hosted   | `True`  | [headless.bemisc.com](https://headless.bemisc.com)       |
+| Hosted   | `False` | [headless.stage.hive.pt](https://headless.stage.hive.pt) |
+
 ## License
 
 Headless is currently licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/).
