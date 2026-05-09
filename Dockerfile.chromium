@@ -1,4 +1,4 @@
-FROM node:18-bookworm-slim as builder
+FROM node:18-bookworm-slim AS builder
 
 ADD app.js /app/
 ADD package.json /app/
