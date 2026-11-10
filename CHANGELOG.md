@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-*
+* Support for rendering the HTML sent in the body of the request - [#20](https://github.com/hivesolutions/headless/issues/20)
+* Support for using the page size of the document in PDFs - [#20](https://github.com/hivesolutions/headless/issues/20)
 
 ### Changed
 
@@ -17,7 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-*
+* Issue with the cookies of a request being shared with the following requests - [#20](https://github.com/hivesolutions/headless/issues/20)
+* Issue with the key not being accepted in the request header - [#20](https://github.com/hivesolutions/headless/issues/20)
 
 ## [0.2.6] - 2023-05-03
 

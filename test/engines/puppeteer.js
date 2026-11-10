@@ -1,4 +1,6 @@
 const assert = require("assert");
+const http = require("http");
+const jimp = require("jimp");
 const puppeteer = require("../../lib/engines/puppeteer");
 
 describe("Puppeteer", function() {
@@ -74,6 +76,113 @@ describe("Puppeteer", function() {
         assert.ok(res.data.slice(0, 2).equals(Buffer.from([0x42, 0x4d])));
     });
 
+    it("should render HTML contents", async () => {
+        const res = await tryRenderPage(
+            "png",
+            { url: "" },
+            Buffer.from('<html><body style="background: #ff0000;"></body></html>')
+        );
+        assert.ok(res.data);
+        assert.strictEqual(res.file, "png");
+        const image = await jimp.read(res.data);
+        assert.deepStrictEqual(jimp.intToRGBA(image.getPixelColor(10, 10)), {
+            r: 255,
+            g: 0,
+            b: 0,
+            a: 255
+        });
+    });
+
+    it("should not intercept the requests of HTML contents", async () => {
+        const requests = [];
+        const server = await startServer((req, res) => {
+            requests.push([req.method, req.url]);
+            res.end();
+        });
+        try {
+            const url = `http://127.0.0.1:${server.address().port}/image.png`;
+            const res = await tryRenderPage(
+                "png",
+                { url: "", method: "POST" },
+                Buffer.from(`<html><body><img src="${url}" /></body></html>`)
+            );
+            assert.strictEqual(res.file, "png");
+            assert.deepStrictEqual(requests, [["GET", "/image.png"]]);
+        } finally {
+            server.close();
+        }
+    });
+
+    it("should send the payload of a POST request to the URL", async () => {
+        const requests = [];
+        const server = await startServer((req, res) => {
+            let data = "";
+            req.on("data", chunk => (data += chunk));
+            req.on("end", () => {
+                requests.push([req.method, req.url, data]);
+                res.setHeader("Content-Type", "text/html");
+                res.end("<html><body>payload</body></html>");
+            });
+        });
+        try {
+            const url = `http://127.0.0.1:${server.address().port}/`;
+            const res = await tryRenderPage(
+                "png",
+                { url: url, method: "POST" },
+                Buffer.from("payload")
+            );
+            assert.strictEqual(res.file, "png");
+            assert.deepStrictEqual(requests[0], ["POST", "/", "payload"]);
+        } finally {
+            server.close();
+        }
+    });
+
+    it("should prefer the CSS page size", async () => {
+        const res = await tryRenderPage(
+            "pdf",
+            { url: "", prefer_css_page_size: "1" },
+            Buffer.from(
+                "<html><head><style>@page { size: A3; }</style></head><body>A3</body></html>"
+            )
+        );
+        assert.strictEqual(res.file, "pdf");
+        assert.deepStrictEqual(pageSize(res.data), [297, 420]);
+    });
+
+    it("should use the page format without preferring the CSS page size", async () => {
+        const res = await tryRenderPage(
+            "pdf",
+            { url: "" },
+            Buffer.from(
+                "<html><head><style>@page { size: A3; }</style></head><body>A3</body></html>"
+            )
+        );
+        assert.strictEqual(res.file, "pdf");
+        assert.deepStrictEqual(pageSize(res.data), [210, 297]);
+    });
+
+    it("should not share cookies between requests", async () => {
+        const cookies = [];
+        const server = await startServer((req, res) => {
+            if (req.url === "/") cookies.push(req.headers.cookie || null);
+            res.setHeader("Content-Type", "text/html");
+            res.end("<html><body>cookies</body></html>");
+        });
+        const engine = new puppeteer.Puppeteer();
+        await engine.init();
+        try {
+            const url = `http://127.0.0.1:${server.address().port}/`;
+            await renderPage(engine, "png", { url: url, cookie: "session,secret" });
+            await renderPage(engine, "png", { url: url });
+            assert.deepStrictEqual(cookies, ["session=secret", null]);
+            assert.strictEqual(1, engine.instance.browserContexts().length);
+        } finally {
+            await engine.destroy();
+            server.close();
+        }
+    });
+
     it("should open new page", async () => {
         const engine = new puppeteer.Puppeteer();
         await engine.init();
@@ -86,30 +195,78 @@ describe("Puppeteer", function() {
         }
     });
 
-    const tryRenderPage = async (format = null) => {
+    it("should open new page in a new context", async () => {
+        const engine = new puppeteer.Puppeteer();
+        await engine.init();
+        try {
+            const page = await engine._newPage();
+            assert.notStrictEqual(page.browserContext(), engine.instance.defaultBrowserContext());
+            assert.strictEqual(2, engine.instance.browserContexts().length);
+        } finally {
+            await engine.destroy();
+        }
+    });
+
+    it("should open new page after the browser is closed", async () => {
+        const engine = new puppeteer.Puppeteer();
+        await engine.init();
+        try {
+            await engine.instance.close();
+            const page = await engine._newPage();
+            assert.ok(engine.instance.connected);
+            assert.notStrictEqual(page.browserContext(), engine.instance.defaultBrowserContext());
+        } finally {
+            await engine.destroy();
+        }
+    });
+
+    const tryRenderPage = async (format = null, query = {}, body = {}) => {
         const engine = new puppeteer.Puppeteer();
         await engine.init();
 
         try {
-            const req = {
-                query: {
-                    url: "https://example.com/",
-                    format: format
-                },
-                body: {}
-            };
-            const res = {
-                send: function(data) {
-                    this.data = data;
-                },
-                type: function(file) {
-                    this.file = file;
-                }
-            };
-            await engine.render(req, res);
-            return res;
+            return await renderPage(engine, format, query, body);
         } finally {
             await engine.destroy();
         }
+    };
+
+    const renderPage = async (engine, format = null, query = {}, body = {}) => {
+        const req = {
+            query: Object.assign(
+                {
+                    url: "https://example.com/",
+                    format: format
+                },
+                query
+            ),
+            body: body
+        };
+        const res = {
+            send: function(data) {
+                this.data = data;
+            },
+            type: function(file) {
+                this.file = file;
+            }
+        };
+        await engine.render(req, res);
+        return res;
+    };
+
+    const startServer = async handler => {
+        const server = http.createServer(handler);
+        await new Promise(resolve => server.listen(0, "127.0.0.1", resolve));
+        return server;
+    };
+
+    const pageSize = data => {
+        const match = data
+            .toString("latin1")
+            .match(/\/MediaBox\s*\[\s*[\d.]+\s+[\d.]+\s+([\d.]+)\s+([\d.]+)/);
+        return [
+            Math.round((parseFloat(match[1]) / 72) * 25.4),
+            Math.round((parseFloat(match[2]) / 72) * 25.4)
+        ];
     };
 });
