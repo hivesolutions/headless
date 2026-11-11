@@ -13,11 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-*
+* Tests run on Node.js 18 to 26 and on Bun
 
 ### Fixed
 
-*
+* Issue with the installation of Chrome in Node.js 26
 
 ## [0.3.0] - 2026-11-11
 
