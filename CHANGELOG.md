@@ -9,14 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* Support for rendering the HTML sent in the body of the request - [#20](https://github.com/hivesolutions/headless/issues/20)
-* Support for using the page size of the document in PDFs - [#20](https://github.com/hivesolutions/headless/issues/20)
-* Documentation of the routes and of their parameters - [#20](https://github.com/hivesolutions/headless/issues/20)
-* Docker image of each version built by CI and deployed to production
+*
 
 ### Changed
 
 *
+
+### Fixed
+
+*
+
+## [0.3.0] - 2026-11-11
+
+### Added
+
+* Support for rendering the HTML sent in the body of the request - [#20](https://github.com/hivesolutions/headless/issues/20)
+* Support for using the page size of the document in PDFs - [#20](https://github.com/hivesolutions/headless/issues/20)
+* Documentation of the routes and of their parameters - [#20](https://github.com/hivesolutions/headless/issues/20)
+* Docker image of each version built by CI and deployed to production
 
 ### Fixed
 
