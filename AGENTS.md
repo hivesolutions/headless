@@ -106,8 +106,8 @@ To create a new release follow the following steps:
 - Create a commit with the following message `version: $VERSION_NUMBER`.
 - Push the commit.
 - Create a new tag with the value of the new version number `$VERSION_NUMBER`.
-- Pushing the tag publishes the `hive-headless` package to npm (Deploy Workflow).
-- Pushing to master builds the `latest` and `debian` Docker images on Docker Hub, which the `headless` jobs of `infra-bemisc` (headless.bemisc.com) and `infra-local` (headless.stage.hive.pt) only pull when redeployed, through the Deploy workflow of each repo (service `headless`, group `apps`).
+- Pushing the tag publishes the `hive-headless` package to npm (Deploy Workflow), builds and pushes the Docker images and deploys `headless` in `infra-bemisc` (headless.bemisc.com).
+- The `headless` job of `infra-local` (headless.stage.hive.pt) runs the `latest` image, built by Docker Hub from master, and only pulls it when redeployed, through the Deploy workflow of `infra-local` (service `headless`, group `apps`).
 - Create a new release on the GitHub repo using the Markdown from the corresponding version entry in `CHANGELOG.md` as the description of the release and the version number as the title. Do not include the title of the release (version and date) in the description.
 
 ## License
