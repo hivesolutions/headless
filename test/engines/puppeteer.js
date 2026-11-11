@@ -1,6 +1,7 @@
 const assert = require("assert");
 const http = require("http");
 const jimp = require("jimp");
+const util = require("hive-js-util");
 const puppeteer = require("../../lib/engines/puppeteer");
 
 describe("Puppeteer", function() {
@@ -14,6 +15,37 @@ describe("Puppeteer", function() {
             this.skip();
         }
         await engine.destroy();
+    });
+
+    it("should destroy without instance", async () => {
+        const engine = new puppeteer.Puppeteer();
+        await engine.destroy();
+        assert.strictEqual(engine.instance, null);
+    });
+
+    it("should reload the browser", async () => {
+        const engine = new puppeteer.Puppeteer();
+        await engine.init();
+        const instance = engine.instance;
+        try {
+            await engine.reload();
+            assert.notStrictEqual(engine.instance, instance);
+            assert.strictEqual(instance.connected, false);
+            assert.strictEqual(engine.instance.connected, true);
+        } finally {
+            await engine.destroy();
+        }
+    });
+
+    it("should return the version", async () => {
+        const engine = new puppeteer.Puppeteer();
+        await engine.init();
+        try {
+            const version = await engine.version();
+            assert.match(version, /^\d+\.\d+\.\d+ (Headless)?Chrome\/[\d.]+$/);
+        } finally {
+            await engine.destroy();
+        }
     });
 
     it("should render a PDF", async () => {
@@ -183,6 +215,96 @@ describe("Puppeteer", function() {
         }
     });
 
+    it("should use the size of the viewport", async () => {
+        const res = await tryRenderPage("png", { width: "400", height: "300", full_page: "0" });
+        const image = await jimp.read(res.data);
+        assert.deepStrictEqual([image.bitmap.width, image.bitmap.height], [400, 300]);
+    });
+
+    it("should use the scale factor", async () => {
+        const res = await tryRenderPage("png", {
+            width: "400",
+            height: "300",
+            full_page: "0",
+            scale_factor: "2"
+        });
+        const image = await jimp.read(res.data);
+        assert.deepStrictEqual([image.bitmap.width, image.bitmap.height], [800, 600]);
+    });
+
+    it("should trim the image", async () => {
+        const res = await tryRenderPage(
+            "png",
+            { url: "", width: "400", height: "300", full_page: "0", trim: "1" },
+            Buffer.from(
+                '<html><body style="margin: 0; background: #ffffff;">' +
+                    '<div style="position: absolute; left: 150px; top: 125px; width: 100px; height: 50px; background: #ff0000;"></div>' +
+                    "</body></html>"
+            )
+        );
+        const image = await jimp.read(res.data);
+        assert.deepStrictEqual([image.bitmap.width, image.bitmap.height], [100, 50]);
+    });
+
+    it("should use the timeout of the navigation", async () => {
+        const server = await startServer((req, res) => {
+            setTimeout(() => res.end("<html><body>late</body></html>"), 3000);
+        });
+        try {
+            const url = `http://127.0.0.1:${server.address().port}/`;
+            await assert.rejects(
+                tryRenderPage("png", { url: url, timeout: "500" }),
+                /Navigation timeout of 500 ms exceeded/
+            );
+        } finally {
+            server.close();
+        }
+    });
+
+    it("should send the extra headers of a POST request to the URL", async () => {
+        const requests = [];
+        const server = await startServer((req, res) => {
+            requests.push([
+                req.headers["content-type"],
+                req.headers["cache-control"],
+                req.headers["x-other"]
+            ]);
+            res.setHeader("Content-Type", "text/html");
+            res.end("<html><body>headers</body></html>");
+        });
+        try {
+            const url = `http://127.0.0.1:${server.address().port}/`;
+            const res = await tryRenderPage(
+                "png",
+                { url: url, method: "POST" },
+                Buffer.from("{}"),
+                {
+                    "content-type": "application/json",
+                    "cache-control": "no-cache",
+                    "x-other": "other"
+                }
+            );
+            assert.strictEqual(res.file, "png");
+            assert.deepStrictEqual(requests[0], ["application/json", "no-cache", undefined]);
+        } finally {
+            server.close();
+        }
+    });
+
+    it("should reload the browser before rendering", async () => {
+        const engine = new puppeteer.Puppeteer();
+        await engine.init();
+        const instance = engine.instance;
+        try {
+            const res = await renderPage(engine, "png", { reload: "1" });
+            assert.strictEqual(res.file, "png");
+            assert.notStrictEqual(engine.instance, instance);
+            assert.strictEqual(instance.connected, false);
+        } finally {
+            await engine.destroy();
+        }
+    });
+
     it("should open new page", async () => {
         const engine = new puppeteer.Puppeteer();
         await engine.init();
@@ -220,18 +342,34 @@ describe("Puppeteer", function() {
         }
     });
 
-    const tryRenderPage = async (format = null, query = {}, body = {}) => {
+    it("should log the errors of the page", async () => {
+        const engine = new puppeteer.Puppeteer();
+        await engine.init();
+        const error = util.Logging.error;
+        const errors = [];
+        util.Logging.error = err => errors.push(err.message);
+        try {
+            const page = await engine._newPage();
+            page.emit("error", new Error("Page crashed!"));
+            assert.deepStrictEqual(errors, ["Page crashed!"]);
+        } finally {
+            util.Logging.error = error;
+            await engine.destroy();
+        }
+    });
+
+    const tryRenderPage = async (format = null, query = {}, body = {}, headers = {}) => {
         const engine = new puppeteer.Puppeteer();
         await engine.init();
 
         try {
-            return await renderPage(engine, format, query, body);
+            return await renderPage(engine, format, query, body, headers);
         } finally {
             await engine.destroy();
         }
     };
 
-    const renderPage = async (engine, format = null, query = {}, body = {}) => {
+    const renderPage = async (engine, format = null, query = {}, body = {}, headers = {}) => {
         const req = {
             query: Object.assign(
                 {
@@ -240,7 +378,8 @@ describe("Puppeteer", function() {
                 },
                 query
             ),
-            body: body
+            body: body,
+            headers: headers
         };
         const res = {
             send: function(data) {

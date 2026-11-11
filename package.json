@@ -58,5 +58,8 @@
     },
     "optionalDependencies": {
         "phantom": "^6.3.0"
+    },
+    "overrides": {
+        "yauzl": "^3.4.0"
     }
 }
