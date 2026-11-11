@@ -27,6 +27,7 @@ app.get("/", (req, res, next) => {
     async function clojure() {
         lib.verifyKey(req);
         const engine = req.query.engine || "puppeteer";
+        if (!Object.keys(lib.ENGINES).includes(engine)) throw new Error("Invalid engine");
         const engineModule = lib.ENGINES[engine];
         const engineInstance = engineModule.singleton();
         await engineInstance.render(req, res, next);
@@ -38,6 +39,7 @@ app.post("/", (req, res, next) => {
     async function clojure() {
         lib.verifyKey(req);
         const engine = req.query.engine || "puppeteer";
+        if (!Object.keys(lib.ENGINES).includes(engine)) throw new Error("Invalid engine");
         const engineModule = lib.ENGINES[engine];
         const engineInstance = engineModule.singleton();
         await engineInstance.render(req, res, next);
@@ -82,10 +84,10 @@ app.use((err, req, res, next) => {
 (async () => {
     await lib.start();
     try {
-        app.listen(lib.conf.PORT, lib.conf.HOST, () => {
+        app.listen(lib.conf.PORT, lib.conf.HOST, async () => {
             try {
                 util.Logging.info("Listening on " + lib.conf.HOST + ":" + String(lib.conf.PORT));
-                lib.init();
+                await lib.init();
             } catch (err) {
                 util.Logging.error(err);
             }

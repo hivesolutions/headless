@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+* Issue with the height of the viewport being read from its width - [#20](https://github.com/hivesolutions/headless/issues/20)
+* Issue with the timeout of the navigation not being applied - [#20](https://github.com/hivesolutions/headless/issues/20)
+* Issue with the server stopping when an engine fails to start
+* Issue with an unknown engine failing with an internal error
 * Issue with the installation of Chrome in Node.js 26
 
 ## [0.3.0] - 2026-11-11
