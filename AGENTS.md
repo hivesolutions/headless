@@ -2,7 +2,7 @@
 
 ## Node.js Runtime
 
-This project runs on [Node.js](https://nodejs.org) (>=18). Make sure you have Node.js installed before working with the codebase.
+This project runs on [Node.js](https://nodejs.org) (>=18). Make sure you have Node.js installed before working with the codebase. [Bun](https://bun.sh) (>=1.1) is also supported as an alternative runtime.
 
 The Puppeteer engine renders with the Chrome that Puppeteer downloads on `npm install` (`node node_modules/puppeteer/install.mjs` downloads it again when missing), which requires the system libraries of Chrome (listed in `.github/workflows/main.yml` and in the `Dockerfile`).
 
@@ -26,7 +26,7 @@ npm test
 
 Try to run the tests whenever making changes to the codebase, before committing new code.
 
-The tests ([Mocha](https://mochajs.org)) live in `test/`, following the layout of `lib/` (eg: `test/engines/puppeteer.js` for `lib/engines/puppeteer.js`), and render real pages (eg: `https://example.com/`) with the Chrome of Puppeteer, so they require network access.
+The tests ([Mocha](https://mochajs.org)) live in `test/`, following the layout of `lib/` (eg: `test/engines/puppeteer.js` for `lib/engines/puppeteer.js`, `test/app.js` for the routes of `app.js`, run as a separate process), and render real pages (eg: `https://example.com/`) with the Chrome of Puppeteer and with PhantomJS (its tests are skipped when PhantomJS can't run), so they require network access.
 
 ## Style Guide
 
@@ -34,7 +34,7 @@ The tests ([Mocha](https://mochajs.org)) live in `test/`, following the layout o
 - Write commit messages using [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 - Never bump the internal package version in `package.json`. This is handled automatically by the release process.
 - JavaScript and YAML files use CRLF as the line ending, Markdown files use LF.
-- The implementation should be done in JavaScript (CommonJS) compatible with the Node.js versions tested by the CI (18 to 21), 18 being the one of the Docker images.
+- The implementation should be done in JavaScript (CommonJS) compatible with the Node.js versions (18 to 26) and the Bun versions (1.1 to 1.4) tested by the CI, 18 being the one of the Docker images.
 - The style should respect the `prettier` and `eslint` formatting rules defined in the project configuration.
 - The implementation should be done in a way that is compatible with the existing codebase.
 - Dependencies should be managed through `package.json`.
