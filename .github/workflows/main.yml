@@ -35,7 +35,7 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        bun-version: ["1.1", "1.2", "latest"]
+        bun-version: ["1.1", "1.2", "1.3", "1.4", "latest"]
     runs-on: ubuntu-latest
     container: oven/bun:${{ matrix.bun-version }}
     steps:
