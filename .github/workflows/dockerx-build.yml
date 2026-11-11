@@ -1,0 +1,80 @@
+name: DockerX Build (reusable)
+on:
+  workflow_call:
+    inputs:
+      dockerfile:
+        description: "Path to the Dockerfile to build"
+        required: true
+        type: string
+      context:
+        description: "Logical context identifier (eg: headless, headless_chromium)"
+        required: true
+        type: string
+      platforms:
+        description: "Comma-separated list of target platforms"
+        required: true
+        type: string
+      tag_suffix:
+        description: "Suffix appended to the computed base tag (eg: \"-amd64\")"
+        required: false
+        type: string
+        default: ""
+    secrets:
+      DOCKERHUB_USERNAME:
+        required: true
+      DOCKERHUB_TOKEN:
+        required: true
+
+jobs:
+  build:
+    name: Build & Push Docker Image
+    timeout-minutes: 180
+    runs-on: [self-hosted, ubuntu, latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up QEMU
+        if: inputs.platforms != 'linux/amd64'
+        uses: docker/setup-qemu-action@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set build variables
+        id: set_vars
+        run: |
+          if [[ "${{ github.ref_name }}" == "master" ]]; then
+            if [[ "${{ inputs.context }}" == "headless" ]]; then
+              base_tag="latest"
+            fi
+            if [[ "${{ inputs.context }}" == "headless_chromium" ]]; then
+              base_tag="chromium"
+            fi
+          else
+            ref_name=${{ github.ref_name }}
+            BRANCH_NAME=${ref_name//\//_}
+            if [[ "${{ inputs.context }}" == "headless" ]]; then
+              base_tag="$BRANCH_NAME"
+            fi
+            if [[ "${{ inputs.context }}" == "headless_chromium" ]]; then
+              base_tag="chromium-$BRANCH_NAME"
+            fi
+          fi
+          echo "tag=${base_tag}${{ inputs.tag_suffix }}" >> $GITHUB_OUTPUT
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ${{ inputs.dockerfile }}
+          platforms: ${{ inputs.platforms }}
+          push: true
+          tags: hivesolutions/headless:${{ steps.set_vars.outputs.tag }}
